@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('entreprise');
             $table->string('poste');
             $table->string('url_offre')->nullable();
-            $table->enum('statut', ['envoyée', 'en_cours', 'entretien', 'offre', 'refusée', 'abandonnée'])->default('envoyée');
-            $table->enum('priorite', ['faible', 'moyenne', 'haute'])->default('moyenne');
+            $table->enum('statut', ['to_review', 'interview_scheduled', 'rejected','offer_received','abandoned'])->default('to_review');
+            $table->enum('priorite', ['high', 'medium', 'low'])->default('medium');
             $table->text('notes')->nullable();
             $table->date('date_candidature');
             $table->softDeletes();

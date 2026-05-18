@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('candidature_id')->constrained()->cascadeOnDelete();
             $table->enum('type', ['téléphonique', 'visio', 'présentiel', 'technique', 'RH']);
+            $table->enum('statut', ['En attente','Refusé','accepté']);
             $table->dateTime('date_heure');
             $table->text('notes_preparation')->nullable();
             $table->enum('resultat', ['en_attente', 'positif', 'négatif'])->default('en_attente');  

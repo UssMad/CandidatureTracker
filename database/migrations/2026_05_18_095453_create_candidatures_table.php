@@ -1,36 +1,71 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Models;
 
-return new class extends Migration
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+class Candidature extends Model
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    use SoftDeletes;
+
+    protected $fillable = [
+        'user_id',
+        'entreprise',
+        'poste',
+        'url_offre',
+        'statut',
+        'priorite',
+        'notes',
+        'date_candidature',
+    ];
+
+    protected function casts(): array
     {
-        Schema::create('candidatures', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('entreprise');
-            $table->string('poste');
-            $table->string('url_offre')->nullable();
-            $table->enum('statut', ['to_review', 'interview_scheduled', 'rejected','offer_received','abandoned'])->default('to_review');
-            $table->enum('priorite', ['high', 'medium', 'low'])->default('medium');
-            $table->text('notes')->nullable();
-            $table->date('date_candidature');
-            $table->softDeletes();
-            $table->timestamps();
-        });
+        return [
+            'date_candidature' => 'date',
+        ];
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    // Relations
+    public function user(): BelongsTo
     {
-        Schema::dropIfExists('candidatures');
+        return $this->belongsTo(User::class);
     }
-};
+
+    public function entretiens(): HasMany
+    {
+        return $this->hasMany(entretiens::class);
+    }
+
+    public function fichiers(): HasMany // bonus
+    {
+        return $this->hasMany(fichiers::class);
+    }
+
+    // Accessors — affichage en français dans les vues
+    public function getStatutLabelAttribute(): string
+    {
+        return match($this->statut) {
+            'envoyée'    => 'Envoyée',
+            'en_cours'   => 'En cours',
+            'entretien'  => 'Entretien',
+            'offre'      => 'Offre reçue',
+            'refusée'    => 'Refusée',
+            'abandonnée' => 'Abandonnée',
+            default      => $this->statut,
+        };
+    }
+
+    public function getPrioriteLabelAttribute(): string
+    {
+        return match($this->priorite) {
+            'faible'  => 'Faible',
+            'moyenne' => 'Moyenne',
+            'haute'   => 'Haute',
+            default   => $this->priorite,
+        };
+    }
+}

@@ -3,18 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class fichiers extends Model
 {
-    protected $table = 'fichiers';
     protected $fillable = [
         'candidature_id',
         'nom_fichier',
         'chemin',
     ];
 
-    public function candidature()
+    public function candidature(): BelongsTo
     {
-        return $this->belongsTo(candidatures::class);
+        return $this->belongsTo(Candidature::class);
     }
 }

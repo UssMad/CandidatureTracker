@@ -3,20 +3,50 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class entretiens extends Model
 {
-    protected $table = 'entretiens';
     protected $fillable = [
         'candidature_id',
         'type',
         'date_heure',
+        'statut',
         'notes_preparation',
         'resultat',
     ];
 
-    public function candidature()
+    protected function casts(): array
     {
-        return $this->belongsTo(candidatures::class);
+        return [
+            'date_heure' => 'datetime',
+        ];
+    }
+
+    public function candidature(): BelongsTo
+    {
+        return $this->belongsTo(Candidature::class);
+    }
+
+    public function getTypeLabelAttribute(): string
+    {
+        return match($this->type) {
+            'téléphonique' => 'Téléphonique',
+            'visio'        => 'Visio',
+            'présentiel'   => 'Présentiel',
+            'technique'    => 'Technique',
+            'RH'           => 'RH',
+            default        => $this->type,
+        };
+    }
+
+    public function getResultatLabelAttribute(): string
+    {
+        return match($this->resultat) {
+            'en_attente' => 'En attente',
+            'positif'    => 'Positif',
+            'négatif'    => 'Négatif',
+            default      => $this->resultat,
+        };
     }
 }

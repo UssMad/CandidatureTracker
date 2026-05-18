@@ -1,71 +1,30 @@
 <?php
 
-namespace App\Models;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
-class Candidature extends Model
+return new class extends Migration
 {
-    use SoftDeletes;
-
-    protected $fillable = [
-        'user_id',
-        'entreprise',
-        'poste',
-        'url_offre',
-        'statut',
-        'priorite',
-        'notes',
-        'date_candidature',
-    ];
-
-    protected function casts(): array
+    public function up(): void
     {
-        return [
-            'date_candidature' => 'date',
-        ];
+        Schema::create('candidatures', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('entreprise');
+            $table->string('poste');
+            $table->string('url_offre')->nullable();
+            $table->enum('statut', ['envoyée', 'en_cours', 'entretien', 'offre', 'refusée', 'abandonnée'])->default('envoyée');
+            $table->enum('priorite', ['faible', 'moyenne', 'haute'])->default('moyenne');
+            $table->text('notes')->nullable();
+            $table->date('date_candidature');
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
-    // Relations
-    public function user(): BelongsTo
+    public function down(): void
     {
-        return $this->belongsTo(User::class);
+        Schema::dropIfExists('candidatures');
     }
-
-    public function entretiens(): HasMany
-    {
-        return $this->hasMany(entretiens::class);
-    }
-
-    public function fichiers(): HasMany // bonus
-    {
-        return $this->hasMany(fichiers::class);
-    }
-
-    // Accessors — affichage en français dans les vues
-    public function getStatutLabelAttribute(): string
-    {
-        return match($this->statut) {
-            'envoyée'    => 'Envoyée',
-            'en_cours'   => 'En cours',
-            'entretien'  => 'Entretien',
-            'offre'      => 'Offre reçue',
-            'refusée'    => 'Refusée',
-            'abandonnée' => 'Abandonnée',
-            default      => $this->statut,
-        };
-    }
-
-    public function getPrioriteLabelAttribute(): string
-    {
-        return match($this->priorite) {
-            'faible'  => 'Faible',
-            'moyenne' => 'Moyenne',
-            'haute'   => 'Haute',
-            default   => $this->priorite,
-        };
-    }
-}
+};

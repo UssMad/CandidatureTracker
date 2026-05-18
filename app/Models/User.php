@@ -32,6 +32,6 @@ class User extends Authenticatable
 
     public function candidatures()
     {
-        return $this->hasMany(candidatures::class);
+        return $this->hasMany(Candidature::class);
     }
 }

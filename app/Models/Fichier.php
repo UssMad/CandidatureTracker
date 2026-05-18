@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class fichiers extends Model
+class Fichier extends Model
 {
     protected $fillable = [
         'candidature_id',

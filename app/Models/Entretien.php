@@ -5,13 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class entretiens extends Model
+class Entretien extends Model
 {
     protected $fillable = [
         'candidature_id',
         'type',
         'date_heure',
-        'statut',
         'notes_preparation',
         'resultat',
     ];

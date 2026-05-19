@@ -11,6 +11,7 @@ class Entretien extends Model
         'candidature_id',
         'type',
         'date_heure',
+        'statut',
         'notes_preparation',
         'resultat',
     ];
@@ -46,6 +47,16 @@ class Entretien extends Model
             'positif'    => 'Positif',
             'négatif'    => 'Négatif',
             default      => $this->resultat,
+        };
+    }
+
+    public function getStatutLabelAttribute(): string
+    {
+        return match($this->statut) {
+            'En attente' => 'En attente',
+            'Refusé'     => 'Refusé',
+            'accepté'    => 'Accepté',
+            default      => $this->statut,
         };
     }
 }

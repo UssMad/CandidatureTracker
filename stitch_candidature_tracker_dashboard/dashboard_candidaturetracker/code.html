@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mes Candidatures - CandidatureTracker</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#adc6ff",
+                        "error": "#ba1a1a",
+                        "surface-container": "#e7eefe",
+                        "tertiary-fixed": "#ffddb8",
+                        "secondary-fixed": "#6ffbbe",
+                        "surface-dim": "#d3daea",
+                        "primary-fixed": "#d8e2ff",
+                        "surface-container-highest": "#dce2f3",
+                        "on-surface": "#151c27",
+                        "on-background": "#151c27",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed-dim": "#4edea3",
+                        "background": "#f9f9ff",
+                        "secondary": "#006c49",
+                        "inverse-primary": "#adc6ff",
+                        "on-secondary-container": "#00714d",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-fixed": "#001a42",
+                        "outline-variant": "#c2c6d6",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed-variant": "#004395",
+                        "surface-tint": "#005ac2",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#a36700",
+                        "primary": "#0058be",
+                        "surface-container-low": "#f0f3ff",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#dce2f3",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e2e8f8",
+                        "on-tertiary-container": "#fffbff",
+                        "surface-bright": "#f9f9ff",
+                        "surface": "#f9f9ff",
+                        "on-primary-container": "#fefcff",
+                        "outline": "#727785",
+                        "primary-container": "#2170e4",
+                        "on-surface-variant": "#424754",
+                        "inverse-on-surface": "#ebf1ff",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-tertiary-fixed": "#2a1700",
+                        "secondary-container": "#6cf8bb",
+                        "inverse-surface": "#2a313d",
+                        "tertiary": "#825100",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#002113",
+                        "on-secondary-fixed-variant": "#005236",
+                        "surface-container-lowest": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-sm": "0.5rem",
+                        "stack-lg": "2rem",
+                        "container-max": "1280px",
+                        "stack-md": "1rem",
+                        "margin-mobile": "1rem",
+                        "gutter": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "badge": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "badge": ["12px", { "lineHeight": "12px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .soft-shadow { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05); }
+        .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .hover-lift:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05); }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col md:flex-row">
+<!-- SideNavBar (Hidden on Mobile) -->
+<nav class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest py-stack-lg border-r border-outline-variant shadow-sm z-50">
+<div class="px-gutter mb-8">
+<h1 class="text-headline-md font-headline-md text-primary font-bold">CandidatureTracker</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Tableau de bord de carrière</p>
+</div>
+<div class="flex-1 flex flex-col gap-2 px-4">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-primary font-bold border-l-4 border-primary bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-body-lg text-body-lg">Tableau de bord</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">archive</span>
+<span class="font-body-lg text-body-lg">Archives</span>
+</a>
+</div>
+<div class="mt-auto flex flex-col gap-2 px-4 border-t border-outline-variant pt-4">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-body-lg text-body-lg">Paramètres</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-body-lg text-body-lg">Déconnexion</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 md:ml-64 flex flex-col w-full">
+<!-- TopAppBar (Mobile & Desktop Header) -->
+<header class="w-full h-16 sticky top-0 z-40 bg-surface/80 backdrop-blur-md shadow-sm border-b md:border-b-0 border-outline-variant md:hidden">
+<div class="flex items-center justify-between px-gutter w-full h-full max-w-container-max mx-auto">
+<div class="flex items-center gap-4">
+<button class="md:hidden text-on-surface-variant">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="text-headline-md font-headline-md font-bold text-primary md:hidden">CandidatureTracker</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-all focus:ring-2 focus:ring-primary-container rounded-full p-1">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all focus:ring-2 focus:ring-primary-container rounded-full p-1">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<div class="px-gutter md:px-8 py-stack-lg max-w-container-max mx-auto w-full flex-1">
+<!-- Page Header & Actions -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-stack-md mb-stack-lg">
+<div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-background">Mes Candidatures</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Suivez l'avancement de vos recherches d'emploi.</p>
+</div>
+<div class="flex flex-col sm:flex-row items-center gap-4">
+<div class="relative w-full sm:w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-sm text-body-sm text-on-background focus:outline-none focus:ring-2 focus:ring-primary-container focus:border-primary transition-all placeholder-outline-variant" placeholder="Rechercher..." type="text"/>
+</div>
+<div class="flex gap-2 w-full sm:w-auto">
+<select class="w-full sm:w-auto px-4 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-sm text-body-sm text-on-background focus:outline-none focus:ring-2 focus:ring-primary-container focus:border-primary transition-all appearance-none cursor-pointer pr-8 bg-[url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23727785%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E')] bg-[length:12px_auto] bg-no-repeat bg-[position:right_12px_center]">
+<option value="">Tous les statuts</option>
+<option value="envoyee">Envoyée</option>
+<option value="entretien">Entretien</option>
+<option value="refusee">Refusée</option>
+</select>
+<button class="flex-shrink-0 bg-primary hover:bg-surface-tint text-on-primary px-6 py-2 rounded-lg font-body-sm text-body-sm font-medium transition-colors duration-200 flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span class="hidden sm:inline">Nouvelle Candidature</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bento Grid / Cards Layout -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-stack-md">
+<!-- Card 1: Envoyée -->
+<div class="bg-surface-container-lowest rounded-xl p-6 soft-shadow hover-lift border border-transparent hover:border-surface-variant flex flex-col justify-between h-full group">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded-lg text-primary font-bold text-xl">
+                                G
+                            </div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-badge text-badge bg-blue-50 text-blue-700">
+                                Envoyée
+                            </span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background line-clamp-1">Développeur Front-end</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Google • Paris, France</p>
+<div class="mt-4 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-red-500"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Haute Priorité</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-2">Postulé le 24 Oct 2023</p>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-outline hover:text-primary transition-colors p-1" title="Voir">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-outline hover:text-primary transition-colors p-1" title="Modifier">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="text-outline hover:text-error transition-colors p-1" title="Archiver">
+<span class="material-symbols-outlined text-[20px]">archive</span>
+</button>
+</div>
+</div>
+<!-- Card 2: Entretien -->
+<div class="bg-surface-container-lowest rounded-xl p-6 soft-shadow hover-lift border border-transparent hover:border-surface-variant flex flex-col justify-between h-full group">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded-lg text-primary font-bold text-xl">
+                                S
+                            </div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-badge text-badge bg-green-50 text-green-700">
+                                Entretien
+                            </span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background line-clamp-1">Product Designer</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Stripe • Remote</p>
+<div class="mt-4 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Moyenne Priorité</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-2">Postulé le 15 Oct 2023</p>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-outline hover:text-primary transition-colors p-1" title="Voir">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-outline hover:text-primary transition-colors p-1" title="Modifier">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="text-outline hover:text-error transition-colors p-1" title="Archiver">
+<span class="material-symbols-outlined text-[20px]">archive</span>
+</button>
+</div>
+</div>
+<!-- Card 3: En attente -->
+<div class="bg-surface-container-lowest rounded-xl p-6 soft-shadow hover-lift border border-transparent hover:border-surface-variant flex flex-col justify-between h-full group">
+<div>
+<div class="flex justify-between items-start mb-4">
+<div class="w-12 h-12 bg-surface-container flex items-center justify-center rounded-lg text-primary font-bold text-xl">
+                                D
+                            </div>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-badge text-badge bg-yellow-50 text-yellow-800">
+                                En attente
+                            </span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-background line-clamp-1">UX Researcher</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Doctolib • Nantes, France</p>
+<div class="mt-4 flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Basse Priorité</span>
+</div>
+<p class="font-body-sm text-body-sm text-outline mt-2">Postulé le 02 Nov 2023</p>
+</div>
+<div class="mt-6 pt-4 border-t border-outline-variant flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="text-outline hover:text-primary transition-colors p-1" title="Voir">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<button class="text-outline hover:text-primary transition-colors p-1" title="Modifier">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="text-outline hover:text-error transition-colors p-1" title="Archiver">
+<span class="material-symbols-outlined text-[20px]">archive</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Empty State (Hidden by default, shown for demonstration if grid was empty) -->
+<!-- <div class="flex flex-col items-center justify-center py-20 px-4 text-center">
+                <div class="w-24 h-24 bg-surface-container rounded-full flex items-center justify-center mb-6">
+                    <span class="material-symbols-outlined text-4xl text-outline-variant">post_add</span>
+                </div>
+                <h3 class="font-headline-md text-headline-md text-on-background mb-2">Aucune candidature</h3>
+                <p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mb-8">Aucune candidature pour le moment. Commencez par en ajouter une pour suivre vos opportunités !</p>
+                <button class="bg-primary hover:bg-surface-tint text-on-primary px-6 py-3 rounded-lg font-body-sm text-body-sm font-medium transition-colors duration-200 flex items-center gap-2 shadow-sm">
+                    <span class="material-symbols-outlined">add</span>
+                    Nouvelle Candidature
+                </button>
+            </div> -->
+</div>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-outline-variant shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50 flex justify-around items-center py-2 px-4 pb-safe">
+<a class="flex flex-col items-center p-2 text-primary" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="font-badge text-badge mt-1">Tableau</span>
+</a>
+<a class="flex flex-col items-center p-2 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">archive</span>
+<span class="font-badge text-badge mt-1">Archives</span>
+</a>
+<a class="flex flex-col items-center p-2 text-on-surface-variant" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-badge text-badge mt-1">Profil</span>
+</a>
+</nav>
+</body></html>

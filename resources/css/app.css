@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin "@tailwindcss/forms";
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -8,4 +9,100 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-inter: 'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-primary: #0058be;
+    --color-primary-container: #2170e4;
+    --color-on-primary: #ffffff;
+    --color-on-primary-container: #fefcff;
+    --color-primary-fixed: #d8e2ff;
+    --color-primary-fixed-dim: #adc6ff;
+    --color-inverse-primary: #adc6ff;
+    --color-surface-tint: #005ac2;
+    --color-on-primary-fixed: #001a42;
+    --color-on-primary-fixed-variant: #004395;
+
+    --color-secondary: #006c49;
+    --color-secondary-container: #6cf8bb;
+    --color-on-secondary: #ffffff;
+    --color-on-secondary-container: #00714d;
+    --color-secondary-fixed: #6ffbbe;
+    --color-secondary-fixed-dim: #4edea3;
+    --color-on-secondary-fixed: #002113;
+    --color-on-secondary-fixed-variant: #005236;
+
+    --color-tertiary: #825100;
+    --color-tertiary-container: #a36700;
+    --color-on-tertiary: #ffffff;
+    --color-on-tertiary-container: #fffbff;
+    --color-tertiary-fixed: #ffddb8;
+    --color-tertiary-fixed-dim: #ffb95f;
+    --color-on-tertiary-fixed: #2a1700;
+    --color-on-tertiary-fixed-variant: #653e00;
+
+    --color-error: #ba1a1a;
+    --color-error-container: #ffdad6;
+    --color-on-error: #ffffff;
+    --color-on-error-container: #93000a;
+
+    --color-surface: #f9f9ff;
+    --color-surface-dim: #d3daea;
+    --color-surface-bright: #f9f9ff;
+    --color-surface-container-lowest: #ffffff;
+    --color-surface-container-low: #f0f3ff;
+    --color-surface-container: #e7eefe;
+    --color-surface-container-high: #e2e8f8;
+    --color-surface-container-highest: #dce2f3;
+    --color-on-surface: #151c27;
+    --color-on-surface-variant: #424754;
+    --color-inverse-surface: #2a313d;
+    --color-inverse-on-surface: #ebf1ff;
+
+    --color-outline: #727785;
+    --color-outline-variant: #c2c6d6;
+
+    --color-background: #f9f9ff;
+    --color-on-background: #151c27;
+    --color-surface-variant: #dce2f3;
+
+    --spacing-gutter: 1.5rem;
+    --spacing-stack-sm: 0.5rem;
+    --spacing-stack-md: 1rem;
+    --spacing-stack-lg: 2rem;
+    --spacing-container-max: 1280px;
+    --spacing-margin-mobile: 1rem;
+
+    --radius-2xl: 1rem;
+
+    --font-size-headline-lg: 32px;
+    --font-size-headline-lg--line-height: 40px;
+    --font-size-headline-lg--letter-spacing: -0.02em;
+    --font-size-headline-lg--font-weight: 700;
+
+    --font-size-headline-lg-mobile: 24px;
+    --font-size-headline-lg-mobile--line-height: 32px;
+    --font-size-headline-lg-mobile--letter-spacing: -0.01em;
+    --font-size-headline-lg-mobile--font-weight: 700;
+
+    --font-size-headline-md: 20px;
+    --font-size-headline-md--line-height: 28px;
+    --font-size-headline-md--font-weight: 600;
+
+    --font-size-body-lg: 16px;
+    --font-size-body-lg--line-height: 24px;
+    --font-size-body-lg--font-weight: 400;
+
+    --font-size-body-sm: 14px;
+    --font-size-body-sm--line-height: 20px;
+    --font-size-body-sm--font-weight: 400;
+
+    --font-size-label-caps: 12px;
+    --font-size-label-caps--line-height: 16px;
+    --font-size-label-caps--letter-spacing: 0.05em;
+    --font-size-label-caps--font-weight: 600;
+
+    --font-size-badge: 12px;
+    --font-size-badge--line-height: 12px;
+    --font-size-badge--font-weight: 500;
 }

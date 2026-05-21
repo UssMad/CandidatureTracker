@@ -18,6 +18,15 @@ class ArchiveController extends Controller
         return view('archives.index', compact('candidatures'));
     }
 
+    public function show($id)
+    {
+        $candidature = Candidature::withTrashed()->with('entretiens', 'fichiers')->findOrFail($id);
+
+        $this->authorize('view', $candidature);
+
+        return view('candidatures.show', compact('candidature'));
+    }
+
     public function restore($id)
     {
         $candidature = Candidature::withTrashed()->findOrFail($id);

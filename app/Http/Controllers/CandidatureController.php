@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Candidature;
+use App\Models\Fichier;
 use App\Http\Requests\CandidatureRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CandidatureController extends Controller
 {
@@ -33,8 +35,16 @@ class CandidatureController extends Controller
     public function store(CandidatureRequest $request)
     {
         $candidature = $request->user()->candidatures()->create(
-            $request->validated()
+            $request->safe()->except('fichier')
         );
+
+        if ($request->hasFile('fichier')) {
+            $path = $request->file('fichier')->store('fichiers', 'public');
+            $candidature->fichiers()->create([
+                'nom_fichier' => $request->file('fichier')->getClientOriginalName(),
+                'chemin' => $path,
+            ]);
+        }
 
         return redirect()->route('candidatures.show', $candidature)
             ->with('success', 'Candidature créée avec succès.');
@@ -44,7 +54,7 @@ class CandidatureController extends Controller
     {
         $this->authorize('view', $candidature);
 
-        $candidature->load('entretiens');
+        $candidature->load('entretiens', 'fichiers');
 
         return view('candidatures.show', compact('candidature'));
     }
@@ -60,7 +70,15 @@ class CandidatureController extends Controller
     {
         $this->authorize('update', $candidature);
 
-        $candidature->update($request->validated());
+        $candidature->update($request->safe()->except('fichier'));
+
+        if ($request->hasFile('fichier')) {
+            $path = $request->file('fichier')->store('fichiers', 'public');
+            $candidature->fichiers()->create([
+                'nom_fichier' => $request->file('fichier')->getClientOriginalName(),
+                'chemin' => $path,
+            ]);
+        }
 
         return redirect()->route('candidatures.show', $candidature)
             ->with('success', 'Candidature mise à jour avec succès.');

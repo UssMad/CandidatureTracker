@@ -159,10 +159,15 @@
             @empty
             <p class="text-body-sm text-on-surface-variant text-center py-4">Aucun fichier joint.</p>
             @endforelse
-            <button class="mt-stack-sm w-full py-2 border-2 border-dashed border-outline-variant rounded-lg text-outline hover:border-primary hover:text-primary transition-colors text-body-sm flex items-center justify-center gap-2">
-                <span class="material-symbols-outlined text-[18px]">upload</span>
-                Ajouter un document
-            </button>
+
+            <form method="POST" action="{{ route('candidatures.fichiers.store', $candidature) }}" enctype="multipart/form-data" class="mt-stack-sm">
+                @csrf
+                <button type="button" onclick="document.getElementById('fichier-upload').click()" class="w-full py-2 border-2 border-dashed border-outline-variant rounded-lg text-outline hover:border-primary hover:text-primary transition-colors text-body-sm flex items-center justify-center gap-2 cursor-pointer">
+                    <span class="material-symbols-outlined text-[18px]">upload</span>
+                    Ajouter un document
+                </button>
+                <input type="file" name="fichier" id="fichier-upload" accept=".pdf,.doc,.docx" class="hidden" onchange="this.form.submit()" />
+            </form>
         </section>
 
         {{-- Company Info --}}

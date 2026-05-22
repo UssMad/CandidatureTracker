@@ -2,61 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Candidature;
 use Illuminate\Http\Request;
 
 class FichierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request, Candidature $candidature)
     {
-        //
+        $this->authorize('update', $candidature);
+
+        $request->validate([
+            'fichier' => ['required', 'file', 'mimes:pdf,doc,docx', 'max:5120'],
+        ]);
+
+        $path = $request->file('fichier')->store('fichiers', 'public');
+
+        $candidature->fichiers()->create([
+            'nom_fichier' => $request->file('fichier')->getClientOriginalName(),
+            'chemin' => $path,
+        ]);
+
+        return redirect()->back()->with('success', 'Fichier ajouté avec succès.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //

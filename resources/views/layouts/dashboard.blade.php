@@ -43,12 +43,23 @@
                  x-transition:leave-start="translate-x-0"
                  x-transition:leave-end="-translate-x-full">
                 <div class="flex flex-col h-full py-stack-lg">
-                    <div class="px-6 mb-8">
-                        <h1 class="text-headline-md font-semibold text-primary">CandidatureTracker</h1>
-                        <p class="text-body-sm text-on-surface-variant mt-1">Tableau de bord de carrière</p>
+                    <div class="px-6 mb-6">
+                        <a href="{{ route('candidatures.index') }}" class="flex items-center gap-3">
+                            <x-application-logo class="w-8 h-8 text-primary flex-shrink-0" />
+                            <div>
+                                <h1 class="text-headline-md font-semibold text-primary">CandidatureTracker</h1>
+                                <p class="text-body-sm text-on-surface-variant -mt-0.5">Tableau de bord de carrière</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="px-4 mb-4">
+                        <a href="{{ route('candidatures.create') }}" class="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg bg-primary text-on-primary font-semibold text-body-sm hover:bg-primary-container hover:text-on-primary-container transition-all duration-200 shadow-sm">
+                            <span class="material-symbols-outlined text-[18px]">add</span>
+                            Nouvelle candidature
+                        </a>
                     </div>
                     <nav class="flex-1 flex flex-col gap-1 px-4">
-                        <x-sidebar-link :href="route('candidatures.index')" :active="request()->routeIs('candidatures.*')" icon="dashboard">
+                        <x-sidebar-link :href="route('candidatures.index')" :active="request()->routeIs('candidatures.*') && !request()->routeIs('archives.*')" icon="dashboard">
                             Tableau de bord
                         </x-sidebar-link>
                         <x-sidebar-link :href="route('archives.index')" :active="request()->routeIs('archives.*')" icon="archive">
@@ -74,9 +85,20 @@
 
     {{-- SideNavBar (Desktop) --}}
     <nav class="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-container-lowest py-stack-lg border-r border-outline-variant shadow-sm z-50">
-        <div class="px-6 mb-8">
-            <h1 class="text-headline-md font-semibold text-primary">CandidatureTracker</h1>
-            <p class="text-body-sm text-on-surface-variant mt-1">Tableau de bord de carrière</p>
+        <div class="px-6 mb-6">
+            <a href="{{ route('candidatures.index') }}" class="flex items-center gap-3">
+                <x-application-logo class="w-8 h-8 text-primary flex-shrink-0" />
+                <div>
+                    <h1 class="text-headline-md font-semibold text-primary">CandidatureTracker</h1>
+                    <p class="text-body-sm text-on-surface-variant -mt-0.5">Tableau de bord de carrière</p>
+                </div>
+            </a>
+        </div>
+        <div class="px-4 mb-4">
+            <a href="{{ route('candidatures.create') }}" class="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg bg-primary text-on-primary font-semibold text-body-sm hover:bg-primary-container hover:text-on-primary-container transition-all duration-200 shadow-sm">
+                <span class="material-symbols-outlined text-[18px]">add</span>
+                Nouvelle candidature
+            </a>
         </div>
         <div class="flex-1 flex flex-col gap-1 px-4">
             <x-sidebar-link :href="route('candidatures.index')" :active="request()->routeIs('candidatures.*') && !request()->routeIs('archives.*')" icon="dashboard">

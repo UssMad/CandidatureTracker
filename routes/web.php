@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CandidatureController;
 use App\Http\Controllers\ArchiveController;
 use App\Http\Controllers\EntretienController;
+use App\Http\Controllers\FichierController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,4 +20,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('archives/{candidature}', [ArchiveController::class, 'restore'])->name('archives.restore');
 
     Route::resource('candidatures.entretiens', EntretienController::class)->only(['store', 'update', 'destroy']);
+
+    Route::post('candidatures/{candidature}/fichiers', [FichierController::class, 'store'])->name('candidatures.fichiers.store');
 });

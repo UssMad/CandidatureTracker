@@ -1,7 +1,8 @@
 @props(['status'])
 
 @if ($status)
-    <div {{ $attributes->merge(['class' => 'font-medium text-sm text-green-600 dark:text-green-400']) }}>
+    <div {{ $attributes->merge(['class' => 'flex items-center gap-2 px-4 py-3 rounded-lg bg-secondary-container text-on-secondary-container text-body-sm font-medium']) }}>
+        <span class="material-symbols-outlined text-[18px]">check_circle</span>
         {{ $status }}
     </div>
 @endif

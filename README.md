@@ -1,58 +1,87 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CandidatureTracker
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+CandidatureTracker is a modern web application built with **Laravel**, **Tailwind CSS**, and **Alpine.js**, designed to help you easily manage and track your job applications. 
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Job Application Tracking**: Keep track of all your ongoing job applications (company name, role, status).
+- **Interview Management**: Schedule and log interviews associated with each application.
+- **File Attachments**: Upload and manage files (CVs, cover letters, technical tests) for each application.
+- **Archiving System**: Archive past or inactive applications to keep your dashboard clean, with the ability to restore or permanently delete them.
+- **User Authentication**: Secure your application data with user accounts, powered by Laravel Breeze.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Backend**: Laravel 13.x (PHP 8.3+)
+- **Frontend**: Blade Templates, Tailwind CSS 4, Alpine.js, Vite
+- **Database**: SQLite (default, configurable)
+- **Testing**: Pest
 
-## Learning Laravel
+## Prerequisites
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Make sure you have the following installed:
+- PHP 8.3 or higher
+- Composer
+- Node.js & npm
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+1. **Clone the repository** (if applicable) or download the project files.
 
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
+2. **Install PHP dependencies**:
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer install
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+3. **Install JavaScript dependencies**:
+```bash
+npm install
+```
 
-## Contributing
+4. **Environment Setup**:
+Copy the example `.env` file and generate the application key.
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. **Database Setup**:
+Run the database migrations. By default, it will create an SQLite database if configured in `.env`.
+```bash
+php artisan migrate
+```
 
-## Code of Conduct
+6. **Build Frontend Assets**:
+```bash
+npm run build
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Running the Application Locally
 
-## Security Vulnerabilities
+You can use the built-in Composer script to run both the Laravel development server and Vite simultaneously:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+composer run dev
+```
+
+Alternatively, you can run them in separate terminal windows:
+```bash
+php artisan serve
+npm run dev
+```
+
+The application will be accessible at `http://127.0.0.1:8000`.
+
+## Testing
+
+This project uses [Pest](https://pestphp.com/) for automated testing. To run the test suite:
+
+```bash
+composer test
+# or
+php artisan test
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

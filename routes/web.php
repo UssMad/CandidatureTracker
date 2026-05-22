@@ -18,6 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::get('archives', [ArchiveController::class, 'index'])->name('archives.index');
     Route::get('archives/{id}', [ArchiveController::class, 'show'])->name('archives.show');
     Route::patch('archives/{candidature}', [ArchiveController::class, 'restore'])->name('archives.restore');
+    Route::delete('archives/{id}', [ArchiveController::class, 'forceDelete'])->name('archives.forceDelete');
 
     Route::resource('candidatures.entretiens', EntretienController::class)->only(['store', 'update', 'destroy']);
 

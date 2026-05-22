@@ -93,4 +93,12 @@ class CandidatureController extends Controller
         return redirect()->route('candidatures.index')
             ->with('success', 'Candidature archivée avec succès.');
     }
+
+    public function forceDelete($id)
+    {
+        $candidature = Candidature::onlyTrashed()->findOrFail($id);
+        $this->authorize('forceDelete', $candidature);
+        $candidature->forceDelete();
+        return redirect()->route('candidatures.archives')->with('success', 'Candidature supprimée définitivement.');
+    }
 }

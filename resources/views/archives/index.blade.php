@@ -29,15 +29,22 @@
             <span class="material-symbols-outlined text-[16px]">archive</span>
             Archivée le {{ $candidature->deleted_at->format('d M Y') }}
         </div>
-        <div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-3">
-            <a href="{{ route('archives.show', $candidature->id) }}" class="flex-1 border border-outline-variant text-on-surface-variant text-body-sm py-2 rounded-lg hover:bg-surface-container-low transition-colors text-center">
-                Voir le détail
+        <div class="mt-auto pt-4 border-t border-outline-variant/30 flex gap-2">
+            <a href="{{ route('archives.show', $candidature->id) }}" class="flex-1 border border-outline-variant text-on-surface-variant text-body-sm py-2 rounded-lg hover:bg-surface-container-low transition-colors text-center flex items-center justify-center">
+                Détail
             </a>
             <form method="POST" action="{{ route('archives.restore', $candidature->id) }}" class="flex-1">
                 @csrf
                 @method('PATCH')
-                <button type="submit" class="w-full bg-surface-container border border-outline-variant text-primary text-body-sm py-2 rounded-lg hover:bg-surface-container-high transition-colors flex items-center justify-center gap-2">
+                <button type="submit" class="w-full h-full bg-surface-container border border-outline-variant text-primary text-body-sm py-2 rounded-lg hover:bg-surface-container-high transition-colors flex items-center justify-center gap-1">
                     <span class="material-symbols-outlined text-sm">restore</span> Restaurer
+                </button>
+            </form>
+            <form method="POST" action="{{ route('archives.forceDelete', $candidature->id) }}" class="flex-none w-10">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="w-full h-full bg-surface-container border border-error/50 text-error text-body-sm rounded-lg hover:bg-error-container hover:text-on-error-container transition-colors flex items-center justify-center" title="Supprimer définitivement" onclick="return confirm('Voulez-vous vraiment supprimer cette candidature définitivement ?')">
+                    <span class="material-symbols-outlined text-sm">delete_forever</span>
                 </button>
             </form>
         </div>

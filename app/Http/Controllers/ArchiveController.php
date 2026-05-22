@@ -38,4 +38,16 @@ class ArchiveController extends Controller
         return redirect()->route('candidatures.show', $candidature)
             ->with('success', 'Candidature restaurée avec succès.');
     }
+
+    public function forceDelete($id)
+    {
+        $candidature = Candidature::withTrashed()->findOrFail($id);
+
+        $this->authorize('forceDelete', $candidature);
+
+        $candidature->forceDelete();
+
+        return redirect()->route('archives.index')
+            ->with('success', 'Candidature supprimée définitivement.');
+    }
 }

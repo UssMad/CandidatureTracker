@@ -87,7 +87,19 @@
                     <span class="material-symbols-outlined text-outline">calendar_month</span>
                     Entretiens
                 </h2>
-                <button type="button" x-data x-on:click="$dispatch('open-modal', 'add-interview')" class="text-primary text-body-sm flex items-center gap-1 hover:underline">
+                <button type="button" 
+                        x-data 
+                        x-on:click="$dispatch('open-modal', { 
+                            name: 'interview-modal', 
+                            isEdit: false,
+                            actionUrl: '{{ route('candidatures.entretiens.store', $candidature) }}',
+                            type: 'téléphonique',
+                            date_heure: '',
+                            statut: 'En attente',
+                            resultat: 'en_attente',
+                            notes_preparation: ''
+                        })" 
+                        class="text-primary text-body-sm flex items-center gap-1 hover:underline">
                     <span class="material-symbols-outlined text-[18px]">add</span>
                     Ajouter
                 </button>
@@ -100,7 +112,38 @@
                     <span class="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full {{ $entretien->resultat === 'positif' ? 'bg-secondary' : ($entretien->resultat === 'négatif' ? 'bg-error' : 'bg-outline-variant') }} border-2 border-surface-container-lowest"></span>
                     <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-1">
                         <h3 class="text-body-lg font-semibold text-on-surface">{{ $entretien->type_label }}</h3>
-                        <span class="text-body-sm text-outline">{{ $entretien->date_heure->format('d M Y à H:i') }}</span>
+                        <div class="flex items-center gap-2">
+                            <span class="text-body-sm text-outline mr-2">{{ $entretien->date_heure->format('d M Y à H:i') }}</span>
+                            
+                            {{-- Edit Button --}}
+                            <button type="button"
+                                    x-data
+                                    x-on:click="$dispatch('open-modal', {
+                                        name: 'interview-modal',
+                                        isEdit: true,
+                                        id: '{{ $entretien->id }}',
+                                        actionUrl: '{{ route('candidatures.entretiens.update', [$candidature, $entretien]) }}',
+                                        type: '{{ $entretien->type }}',
+                                        date_heure: '{{ $entretien->date_heure->format('Y-m-d\TH:i') }}',
+                                        statut: '{{ $entretien->statut }}',
+                                        resultat: '{{ $entretien->resultat }}',
+                                        notes_preparation: $el.getAttribute('data-notes')
+                                    })"
+                                    data-notes="{{ $entretien->notes_preparation }}"
+                                    class="text-on-surface-variant hover:text-primary transition-colors p-1"
+                                    title="Modifier">
+                                <span class="material-symbols-outlined text-[18px]">edit</span>
+                            </button>
+
+                            {{-- Delete Button --}}
+                            <form method="POST" action="{{ route('candidatures.entretiens.destroy', [$candidature, $entretien]) }}" onsubmit="return confirm('Supprimer cet entretien ?')" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-on-surface-variant hover:text-error transition-colors p-1" title="Supprimer">
+                                    <span class="material-symbols-outlined text-[18px]">delete</span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                     <div class="flex items-center gap-3 text-body-sm text-on-surface-variant mb-2">
                         <span class="flex items-center gap-1">
@@ -184,9 +227,33 @@
     </div>
 </div>
 
-{{-- Add Interview Modal --}}
-<div x-data="{ open: {{ $errors->any() ? 'true' : 'false' }} }" x-show="open" x-cloak
-     @open-modal.window="if ($event.detail === 'add-interview') open = true"
+{{-- Interview Modal (Create/Edit) --}}
+<div x-data="{ 
+        open: {{ $errors->any() ? 'true' : 'false' }}, 
+        isEdit: {{ old('entretien_id') ? 'true' : 'false' }},
+        entretienId: '{{ old('entretien_id', '') }}',
+        actionUrl: '{{ old('entretien_id') ? route('candidatures.entretiens.update', [$candidature, old('entretien_id', 0)]) : route('candidatures.entretiens.store', $candidature) }}',
+        type: '{{ old('type', 'téléphonique') }}',
+        date_heure: '{{ old('date_heure', '') }}',
+        statut: '{{ old('statut', 'En attente') }}',
+        resultat: '{{ old('resultat', 'en_attente') }}',
+        notes_preparation: '{{ addslashes(old('notes_preparation', '')) }}'
+     }"
+     x-show="open" 
+     x-cloak
+     @open-modal.window="
+         if ($event.detail.name === 'interview-modal') {
+             open = true;
+             isEdit = $event.detail.isEdit;
+             entretienId = $event.detail.id || '';
+             actionUrl = $event.detail.actionUrl;
+             type = $event.detail.type || 'téléphonique';
+             date_heure = $event.detail.date_heure || '';
+             statut = $event.detail.statut || 'En attente';
+             resultat = $event.detail.resultat || 'en_attente';
+             notes_preparation = $event.detail.notes_preparation || '';
+         }
+     "
      x-on:keydown.escape.window="open = false"
      class="fixed inset-0 z-50 overflow-y-auto"
      x-transition:enter="transition-opacity ease-out duration-200"
@@ -199,13 +266,16 @@
         <div class="fixed inset-0 bg-black/40" @click="open = false"></div>
         <div class="relative bg-surface-container-lowest rounded-xl shadow-xl p-6 md:p-8 w-full max-w-lg z-10" @click.away="open = false">
             <div class="flex items-center justify-between mb-4">
-                <h2 class="text-headline-md font-semibold text-on-surface">Ajouter un entretien</h2>
+                <h2 class="text-headline-md font-semibold text-on-surface" x-text="isEdit ? 'Modifier l\'entretien' : 'Ajouter un entretien'"></h2>
                 <button @click="open = false" class="text-on-surface-variant hover:text-on-surface">
                     <span class="material-symbols-outlined">close</span>
                 </button>
             </div>
-            <form method="POST" action="{{ route('candidatures.entretiens.store', $candidature) }}">
+            <form method="POST" :action="actionUrl">
                 @csrf
+                <input type="hidden" name="_method" :value="isEdit ? 'PUT' : 'POST'">
+                <input type="hidden" name="entretien_id" :value="entretienId">
+
                 @if ($errors->any())
                     <div class="bg-error-container text-on-error-container px-4 py-3 rounded-lg mb-4 text-body-sm">
                         <ul class="list-disc list-inside">
@@ -218,7 +288,7 @@
                 <div class="space-y-4">
                     <div>
                         <x-input-label for="type" value="Type d'entretien" />
-                        <select id="type" name="type" class="mt-1 block w-full border-outline-variant rounded-lg text-body-sm focus:border-primary focus:ring-primary-container shadow-sm bg-surface-container-lowest">
+                        <select id="type" name="type" x-model="type" class="mt-1 block w-full border-outline-variant rounded-lg text-body-sm focus:border-primary focus:ring-primary-container shadow-sm bg-surface-container-lowest">
                             <option value="téléphonique">Téléphonique</option>
                             <option value="visio">Visio</option>
                             <option value="présentiel">Présentiel</option>
@@ -228,11 +298,11 @@
                     </div>
                     <div>
                         <x-input-label for="date_heure" value="Date et heure" />
-                        <x-text-input id="date_heure" name="date_heure" type="datetime-local" class="mt-1 block w-full" />
+                        <x-text-input id="date_heure" name="date_heure" type="datetime-local" x-model="date_heure" class="mt-1 block w-full" />
                     </div>
                     <div>
                         <x-input-label for="statut" value="Statut" />
-                        <select id="statut" name="statut" class="mt-1 block w-full border-outline-variant rounded-lg text-body-sm focus:border-primary focus:ring-primary-container shadow-sm bg-surface-container-lowest">
+                        <select id="statut" name="statut" x-model="statut" class="mt-1 block w-full border-outline-variant rounded-lg text-body-sm focus:border-primary focus:ring-primary-container shadow-sm bg-surface-container-lowest">
                             <option value="En attente">En attente</option>
                             <option value="Refusé">Refusé</option>
                             <option value="accepté">Accepté</option>
@@ -240,7 +310,7 @@
                     </div>
                     <div>
                         <x-input-label for="resultat" value="Résultat" />
-                        <select id="resultat" name="resultat" class="mt-1 block w-full border-outline-variant rounded-lg text-body-sm focus:border-primary focus:ring-primary-container shadow-sm bg-surface-container-lowest">
+                        <select id="resultat" name="resultat" x-model="resultat" class="mt-1 block w-full border-outline-variant rounded-lg text-body-sm focus:border-primary focus:ring-primary-container shadow-sm bg-surface-container-lowest">
                             <option value="en_attente">En attente</option>
                             <option value="positif">Positif</option>
                             <option value="négatif">Négatif</option>
@@ -248,15 +318,14 @@
                     </div>
                     <div>
                         <x-input-label for="notes_preparation" value="Notes de préparation" />
-                        <textarea id="notes_preparation" name="notes_preparation" rows="3" class="mt-1 block w-full border-outline-variant rounded-lg text-body-sm focus:border-primary focus:ring-primary-container shadow-sm bg-surface-container-lowest resize-y"></textarea>
+                        <textarea id="notes_preparation" name="notes_preparation" x-model="notes_preparation" rows="3" class="mt-1 block w-full border-outline-variant rounded-lg text-body-sm focus:border-primary focus:ring-primary-container shadow-sm bg-surface-container-lowest resize-y"></textarea>
                     </div>
                 </div>
                 <div class="mt-6 flex justify-end gap-3">
                     <button type="button" @click="open = false" class="px-4 py-2 rounded-lg text-body-sm font-medium text-primary hover:bg-surface-container-low transition-colors">
                         Annuler
                     </button>
-                    <button type="submit" class="px-4 py-2 rounded-lg text-body-sm font-medium bg-primary text-on-primary hover:bg-surface-tint transition-colors shadow-sm">
-                        Ajouter
+                    <button type="submit" class="px-4 py-2 rounded-lg text-body-sm font-medium bg-primary text-on-primary hover:bg-surface-tint transition-colors shadow-sm" x-text="isEdit ? 'Enregistrer' : 'Ajouter'">
                     </button>
                 </div>
             </form>

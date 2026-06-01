@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('entretiens', function (Blueprint $table) {
-            $table->enum('statut', ['En attente', 'Refusé', 'accepté'])->after('date_heure');
-        });
+        if (!Schema::hasColumn('entretiens', 'statut')) {
+            Schema::table('entretiens', function (Blueprint $table) {
+                $table->enum('statut', ['En attente', 'Refusé', 'accepté'])->after('date_heure');
+            });
+        }
     }
 
     /**
@@ -21,8 +23,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('entretiens', function (Blueprint $table) {
-            $table->dropColumn('statut');
-        });
+        if (Schema::hasColumn('entretiens', 'statut')) {
+            Schema::table('entretiens', function (Blueprint $table) {
+                $table->dropColumn('statut');
+            });
+        }
     }
 };

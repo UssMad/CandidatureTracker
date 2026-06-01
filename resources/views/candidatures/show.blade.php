@@ -194,7 +194,7 @@
                             <p class="text-body-sm text-on-surface truncate">{{ $fichier->nom_fichier }}</p>
                         </div>
                     </div>
-                    <a href="{{ Storage::disk('public')->url($fichier->chemin) }}" download class="text-outline hover:text-primary transition-colors p-1" aria-label="Télécharger">
+                    <a href="{{ asset('storage/' . $fichier->chemin) }}" download class="text-outline hover:text-primary transition-colors p-1" aria-label="Télécharger">
                         <span class="material-symbols-outlined">download</span>
                     </a>
                 </li>
